@@ -1,0 +1,61 @@
+## Lingo
+- Entité source ou entité demandeuse : entité qui souhaite se lier à une autre, celle qui demande l'opération sur une autre entité (une personne souhaite s'ajouter dans une organisation, personne est donc l'entité à lier)
+- Entité cible/target ou entité détentrice : Entité qui détient la source de vérité, qui détient l'information de la relation et dont ont doit demander la mise à jour. (une organisation détient l'information de qui sont c'est membre.)
+## Problème
+L'entité détentrice organisation possède le champs "team" et a le contrôle de la relation "membre de l'organisation". L'utilisateur qui se créer une entité personne aimerait pouvoir s'ajouter à une organisation dont il fait partie.
+
+Problème, il doit sauvegarder sa fiche personne, aller dans la fiche organisation et ensuite s'ajouter dans l'organisation.
+
+But : On veux permettre à l'utilisateur de s'insérer dans une organisation ou un projet s'il le souhaite, à partir de sa page personne.
+Il faut donc mettre en place un mécanisme pour permettre à l'utilisateur de s'ajouter dans une organisation, et que cette sauvegarde se fasse de façon ACID dans la base de données via des transactions où les deux opération doivent réussir.
+
+## Idée de base et Flow
+Créer une structure de donnée capable de définir une opération à effectuer sur la base de donnée en lien avec une relations, en créant une certaine abstraction pour ne pas compliquer le frontend.
+
+La structure serait envoyer en même temps que la requête create/update d'une entité, dans `req.body.relations` et indiquerait qu'un opération supplémentaire est requise pour effectuer une liaison relationnelle.
+
+On souhaite avoir une structure qui possède les caractéristiques suivantes :
+- Peut supporter plusieurs modifications (si une personne souhaite s'ajouter dans plusieurs organisations/projets à la fois)
+- Connaître l'identifiant de l'entité demandeuse (id de personne) et potentiellement sa collection
+- Connaître la collection et l'identifiant de l'entité détentrice
+- Connaître la relation qu'on souhaite mettre à jour (par exemple `memberOf` à la place de la gestion des champ `team.member` etc.
+- Connaître l'opération qu'on souhaite effectuer (est-ce qu'on ajoute un membre ou on doit retirer le membre etc.) (Add, Remove etc.)
+- Connaître l'information à mettre à jour. (Comment l'objet doit être mis à jour. Dans le cas de remove : quel id à aller chercher dans le array pour retirer l'entrée du array. Dans le cas de update ou create : Quel id et quelle rôle mettre à jour ou ajouter dans team.)
+
+### RelationSchema
+Pour simplifier les requêtes et le flow, chaque relation devra être définie dans l'API. De sorte que l'api permettre seulement les mises à jour voulu/définie.
+L'idée est simplement de lister chaque liaison et donc de correctement décrire chaque relation et ce qu'on attend de la requête pour effectuer la mise à jour.
+
+Par exemple, "MemberOf" serait le libellé qui représente la liaison d'une personne dans une organisation. La structure de l'objet d'information devra nécessairement être "Member" avec un id (objectId) et un role (string). il défini quelle collection peuvent être touchée. "Person" --> "Org" ou "Project" etc.
+
+### Flow
+(l'exemple avec la première feature qui sera donc d'ajouter une personne comme membre d'une organisation)
+1. Le frontend envoie une requête de create/update d'une personne. La requête composé de `req.body.data` qui contient l'entité personne à créer ou mettre à jour et de `req.body.relations` (facultatif), la structure d'objet de relation qui sera définie par l'api.
+2. La route du backend doit capturer qu'il s'agit d'un update différent lorsqu'il y a un objet `relation` et ouvrir une transaction de base de donnée pour effectuer les multiples modifications.
+3. La route fait des vérification sur le schéma de la relation, à savoir si la relation existe, et si le contenu de l'objet relation reçu est conforme. (relation existante, collection acceptée, structure de l'objet d'information correcte etc)
+4. L'API tente d'effectuer les modifications.
+	1. Si une échoue, on renvoit une erreur de mise à jour.
+	2. Si succès, on envoie succès comme quoi tout a été mis à jour.
+
+#### Flow en profondeur
+Frontend :
+- Gère le UI/UX pour permettre à l'utilisateur d'entrer la relation voulu
+- Forme l'objet de relation (qui représente l'ajout de la relation à la base de données)
+- Envoie la donnée relation dans `req.body.relation` côte à côte avec `req.body.data` sur la route /update de l'entité source.
+- Affiche et agit en conséquence de la réponse de l'API (succès ou non, message d'erreur etc.)
+
+Backend :
+- Reçoit la requête update d'une entité via la route et transmettre l'information au controller.
+- Le controller décortique l'objet requête pour déterminer s'il faut gérer des relations ou non.
+	- Dans le cas où non, effectuer la mise à jour normalement.
+- Dans le cas où il y a une relation, le controller doit ouvrir une transaction (mongo session)
+	1. Mettre à jour la/les relations
+		- Soumettre la relation à une vérification pour voir si la relation existe et l'objet bien formé
+		- Chercher les instances de controller des entités cibles
+		- Envoyer aux controller des entités cibles la demande de mise à jour de relation avec l'objet relation concerné.
+		- Évaluer la réponse du service pour la mise en commun d'un message de succès ou d'erreur
+	2. Mettre à jour l'entité source
+		- Comme normalement, demander au controller de mettre à jour la personne
+		- Évaluer la réponse du service pour la mise en commun d'un message de succès ou d'erreur
+	3. Mettre en commun les réponses des services, déterminer un message de réponse et validé ou invalider la transaction
+- Retourner le message de réponse de mise à jour de l'API à la route.
