@@ -11,15 +11,16 @@ On voit 2 pistes de structure pour les préfixe
 ## Avec un préfix + un nombre incrémenté
 
 ### Pour les entités
-`AN` + `2 premières lettres de l'entité` + `nombre incrémenté`
+`AN` + `2 premières lettres du type d'entité` + `nombre incrémenté`
 - ANPE1 (pour la personne au id 1). ou ANPE179.
 - ANOR1 (pour l'organisation au id 1) ou ANOR179.
 - ANPR1 - projet
 - ANEV1 - événement
 - ANLI1 - lieu
 - ANEQ1 - équipement
+
 Qui donnerais un identifiant unique d'url comme :
-`avnu.ca/u/anpe1` `/u` = pour unique, qui donne la place à pallier si on rencontre un mur et qu'on doit supporter plusqu'une structure comme :  `avnu.ca/u-2/anpe1`
+`avnu.ca/u/anpe1` `/u` = pour unique, qui donne la place à pallier si on rencontre un mur et qu'on doit supporter plus qu'une structure comme :  `avnu.ca/u-2/anpe1`
 ### Pour les taxonomies
 `AN`+`T`+`2 premières lettre de la taxonomie`+`nombre incrémental`
 `ANTCO`
@@ -36,12 +37,11 @@ erDiagram
     ENTITY {
         uuid id "Identifiant unique d'AVNU privé"
         string unique_id "Identifiant unique d'AVNU public"
-        string[] identifiers "identifiants de tous les autres base de données, wikidata, artsdata, ISNI, etc."
-        string search_text "String pour facilité la recherche par texte et indexer le contenu"
-        int entity_id "Lien vers la collection"
+        int entity_id "ID incrémentale interne pour lier l'entité"
+        string entity_type "Lien vers la collection"
     }
     PERSON {
-        uuid id "Id de la personne dans sa table de collection"
+        uuid id "UUID interne de la personne"
         string unique_id
     }
     ENTITY ||--o{ PERSON : "entity_id = id"
@@ -53,6 +53,16 @@ Il y a :
 - NanoID https://www.npmjs.com/package/nanoid
 - KSUID https://github.com/segmentio/ksuid
 
+## Questions
+Est-ce qu'on implémenter les identifiants externe dans cette collection ou si on l'intègre directement dans le document de l'entité
+```
+string[] identifiers "identifiants de tous les autres base de données, wikidata, artsdata, ISNI, etc."
+```
+
+Search text devrait être implémenter en second lieux ? Et vérifier l'optimisation des importance commencé avec les entité eux même.
+```
+string search_text "String pour facilité la recherche par texte et indexer le contenu"
+```
 ## À lire
 https://www.w3.org/TR/rdf11-concepts/#section-rdf-graph
 Sur les IRI, litterals.
