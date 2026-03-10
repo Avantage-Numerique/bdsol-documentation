@@ -32,6 +32,9 @@ La deuxième propriété qu'on veut avoir absolument disponible, même si le use
  ∴ `shortDescription` est vide, on affiche/utilise la version généré.
 
 ## Dans la BD
+
+Si l'utilisateur a ajouter une description courte : 
+
 ```javascript
 {
 	description: "Very long text about that entity.",
@@ -51,6 +54,26 @@ La deuxième propriété qu'on veut avoir absolument disponible, même si le use
 }
 ```
 
+Si l'utilisateur n'a pas ajouter une description courte :
+
+```javascript
+{
+	description: "Very long text about that entity.",
+	shortDescription : "",
+	_sources: {//not mandatory
+		description: {
+			generated: false//toujours false par défault si pas de valeur ici.
+		},
+		shortDescription : {
+			generated: false,
+			date: "2026-03-10 00:00:00 UTC-4",
+			source: "avnu"
+			...
+		},
+		...
+	}
+}
+```
 ## Envoyer via le DTO
 ```javascript
 {
@@ -78,8 +101,9 @@ La deuxième propriété qu'on veut avoir absolument disponible, même si le use
 	- `propertyMeta`
 	- 
 - Est-ce qu'on met `_sources` dans `meta` dans le fond ?
-	- Si oui, est-ce que c'est trop deep `meta.propertySource`
-	- Si non, 
+	- Si oui, est-ce que c'est trop deep `meta._source.shortDescription.property`
+	- Si non, est-ce que le fait d'avoir `_source` et `meta` sans le `_` , donc il faut migrer vers le `_` pour `meta` ou mettre `sources` sans le `_`.
+- Est-ce qu'on met juste le `generated` dans le DTO ?
 # [[Conception]] pour Contenus générés
 
 
