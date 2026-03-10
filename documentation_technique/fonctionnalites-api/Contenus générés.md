@@ -32,7 +32,7 @@ La deuxième propriété qu'on veut avoir absolument disponible, même si le use
  ∴ `shortDescription` est vide, on affiche/utilise la version généré.
 
 ## Dans la BD
-```json
+```javascript
 {
 	description: "Very long text about that entity.",
 	shortDescription : "user have writen something",
@@ -52,7 +52,7 @@ La deuxième propriété qu'on veut avoir absolument disponible, même si le use
 ```
 
 ## Envoyer via le DTO
-```json
+```javascript
 {
 	description: "Very long text about that entity.",
 	shortDescription : "Generated content",
