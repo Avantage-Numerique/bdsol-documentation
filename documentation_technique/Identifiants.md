@@ -21,6 +21,8 @@ On voit 2 pistes de structure pour les préfixe
 
 Qui donnerais un identifiant unique d'url comme :
 `avnu.ca/u/anpe1` `/u` = pour unique, qui donne la place à pallier si on rencontre un mur et qu'on doit supporter plus qu'une structure comme :  `avnu.ca/u-2/anpe1`
+
+
 ### Pour les taxonomies
 `AN`+`T`+`2 premières lettre de la taxonomie`+`nombre incrémental`
 `ANTCO`

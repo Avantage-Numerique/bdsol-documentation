@@ -96,7 +96,7 @@ Si l'utilisateur n'a pas ajouter une description courte :
 
 
 ## Sous discussion :
-- `_sources` nom assez clair ?
+- `_sources` nom assez clair ? : trop compliqué pour l'instant on ajoutera ça 
 	- `propertySources`
 	- `propertyMeta`
 	- 
@@ -106,126 +106,23 @@ Si l'utilisateur n'a pas ajouter une description courte :
 - Est-ce qu'on met juste le `generated` dans le DTO ?
 # [[Conception]] pour Contenus générés
 
+Après la discussion du 2026-03-11
+
+On garde la données brutes dans le document.
+On ajoute un objet `generated` qui regroupe les contenus générés par l'API.
+
+On ajoute la nomenclature avec le `_` donc l'objet devient : `_generated`
 
 # Structure
 
 ```json
 {
-  "_id": {
-    "$oid": "67d331b6bce8cba00becb22a"
-  },
-  "firstName": "Patrick",
-  "lastName": "Watson",
-  "__v": 0,
-  "badges": [],
-  "createdAt": {
-    "$date": "2025-03-13T19:27:50.043Z"
-  },
-  "description": "<p>Chanteur</p>",
-  "domains": [
-    {
-      "domain": {
-        "$oid": "67d331b4bce8cba00becb1d8"
-      }
-    }
-  ],
-  "meta": {
-    "state": "pending",
-    "lastModifiedBy": {
-      "$oid": "67d331b5bce8cba00becb228"
-    }
-  },
-  "_sources" {
-	"shortDescription": {
-		"generated": "true",
-		"date": "2026-03-10 00:00:00 UTC-4",
-		"source": "avnu"
+	description: "Very long text about that entity.",
+	shortDescription : "User content",
+	_generated: {
+		shortDescription : "generated value"
+		...
 	}
-  },
-  "nickname": "PoW",
-  "occupations": [
-    {
-      "groupName": "3333333",
-      "skills": [
-        {
-          "$oid": "67d331b6bce8cba00becb252"
-        },
-        {
-          "$oid": "67d331b4bce8cba00becb1cb"
-        }
-      ],
-      "subMeta": {
-        "order": 2
-      }
-    },
-    {
-      "groupName": "444444",
-      "skills": [
-        {
-          "$oid": "68e565aa0a024c0cd38b2536"
-        }
-      ],
-      "subMeta": {
-        "order": 3
-      }
-    },
-    {
-      "groupName": "111111",
-      "skills": [
-        {
-          "$oid": "68ef9fe5110556c9806237fc"
-        }
-      ],
-      "subMeta": {
-        "order": 0
-      }
-    },
-    {
-      "groupName": "2222222",
-      "skills": [
-        {
-          "$oid": "68a34026b65efc11cc667c0d"
-        }
-      ],
-      "subMeta": {
-        "order": 1
-      }
-    }
-  ],
-  "slug": "patrick-watson",
-  "updatedAt": {
-    "$date": "2025-12-10T21:29:55.958Z"
-  },
-  "url": [
-    {
-      "label": "asdasdasd",
-      "url": "asdasdasd",
-      "subMeta": {
-        "order": 0
-      }
-    },
-    {
-      "label": "asdasd",
-      "url": "asdasdasd",
-      "subMeta": {
-        "order": 1
-      }
-    }
-  ],
-  "catchphrase": "",
-  "contactPoint": {
-    "email": {
-      "address": ""
-    },
-    "tel": {
-      "num": "",
-      "ext": ""
-    },
-    "website": {
-      "url": ""
-    }
-  },
-  "region": ""
 }
 ```
 
