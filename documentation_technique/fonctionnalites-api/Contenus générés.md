@@ -115,7 +115,7 @@ On ajoute la nomenclature avec le `_` donc l'objet devient : `_generated`
 
 # Structure
 
-```json
+```javascript
 {
 	description: "Very long text about that entity.",
 	shortDescription : "User content",
