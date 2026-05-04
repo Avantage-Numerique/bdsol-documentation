@@ -6,8 +6,69 @@ Permettre la liaison d'autres identifiant unique dans la BDSOL
 
 # [[Brainstorm]] pour Identifiants
 
-On voit 2 pistes de structure pour les préfixe
+# Structure idée 2 (2026-05)
+`Root domain` + `base path` + `/` `endpoint` / +  
+## Root domain
+`http://avnu.ca/`
+### Base path 
+**`/entity/`**
+#### Brainstorm ^^
+`/uid/`
+`/p/` pour pérenne
+`/e/` entity, mais on veut probablement le prendre pour endpoint.
+`/ressource/` 
+`/d/` pour directory / document
+`/o/` (on va le prendre pour l'ontologie technique / context).
+`/z/` Agent du chaos 
+`/adp/` angine de poitrine
 
+### Endpoint
+`/r/` + `uid=URI`
+
+view pour voir la données 
+## UID : `AN` + `ℕ`
+
+# Structure URI
+
+
+# Exemples externes
+Wikidata : http://www.wikidata.org/entity/Q5 (redirige vesr http://www.wikidata.org/wiki/Q5)
+Artsdata : http://kg.artsdata.ca/resource/K12-438 (e)
+
+# À lire 
+https://www.w3.org/TR/rdf11-concepts/#section-rdf-graph
+Sur les IRI, litterals.
+
+https://docs.artsdata.ca/identifiers-guidelines/identifier-recommendations.html
+
+
+# [[Conception]] pour Identifiants
+
+# Structure
+`Root domain` + `base path` + `/` `endpoint` / +  `?uid=URI`
+
+## Identifiant pérenne
+```javascript
+http://avnu.ca/entity/URI
+```
+
+## Redirection vers la données
+```javascript
+https://api.avnu.ca/r/view?uri=http://avnu.ca/entity/URI
+```
+
+# Todo
+
+
+# Planifié
+
+
+
+# Archive
+La structure d'idée 1 est partiellement réfuté. On enlève les deux première lettre du type de l'entité.
+# Structure idée 1
+
+On voit 2 pistes de structure pour les préfixe
 ## Avec un préfix + un nombre incrémenté
 
 ### Pour les entités
@@ -31,7 +92,7 @@ Si la taxonomie est un multi mots, c'est la première lettre des 2 premiers mots
 `ANTSA1` pour `Internet par exemple` ou `ANTTE1` pour amplificateur (type d'équipement)
 ## Avec un préfix + une chaine de caractère unique
 `AN` + `2 premières lettre de l'entité` + `chaine unique`
-ANPE + chaine unique + directement le princpale ou un deuxième pour garde le id unique privé à l'env.
+ANPE + chaine unique + directement le princpal ou un deuxième pour garde le id unique privé à l'env.
 
 par exemple :
 ```mermaid
@@ -65,27 +126,3 @@ Search text devrait être implémenter en second lieux ? Et vérifier l'optimisa
 ```
 string search_text "String pour facilité la recherche par texte et indexer le contenu"
 ```
-## À lire
-https://www.w3.org/TR/rdf11-concepts/#section-rdf-graph
-Sur les IRI, litterals.
-
-# [[Conception]] pour Identifiants
-
-
-# Structure
-
-```javascript
-
-```
-
-## Exemple
-
-```javascript
-
-```
-
-
-# Todo
-
-
-# Planifié
