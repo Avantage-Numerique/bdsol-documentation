@@ -25,7 +25,7 @@ Permettre la liaison d'autres identifiant unique dans la BDSOL
 ### Endpoint
 `/r/` + `uid=URI`
 
-view pour voir la données 
+View pour voir la données 
 ## UID : `AN` + `ℕ`
 
 # Structure URI
@@ -35,10 +35,10 @@ view pour voir la données
 Wikidata : http://www.wikidata.org/entity/Q5 (redirige vesr http://www.wikidata.org/wiki/Q5)
 Artsdata : http://kg.artsdata.ca/resource/K12-438 (e)
 
+
 # À lire 
 https://www.w3.org/TR/rdf11-concepts/#section-rdf-graph
 Sur les IRI, litterals.
-
 https://docs.artsdata.ca/identifiers-guidelines/identifier-recommendations.html
 
 
