@@ -21,8 +21,26 @@ L'api utilisera ce système de version
 L'app aussi utilisera cette version.
 
 # Méthodologie
-Pour construire les notes de version automatiquement, on va devoir utiliser les pull request.
+Pour construire les notes de version automatiquement, on utilise les pull request.
 
 Chaque fonctionnalité / stories devra avoir sa branche. 
 
 Et être merger dans Github pour être en mesure de commenter, d'être révisé et d'être inclus dans les notes de versions.
+
+## Nomenclature des branches
+`
+Avec du kebab
+`Base de la branche`-`version de la branche de base`-`fonctionnalité`
+
+**Important** : L'API et l'APP doivent partager le même nom
+- Api : `dev-sameAs`
+- App: `dev-sameAs`
+
+Exemple avec une branche de base avec une version : 
+- Api : `dev-1-0-4-sameAs`
+- App: `dev-1-0-4-sameAs`
+
+
+
+
+
