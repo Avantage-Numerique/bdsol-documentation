@@ -41,6 +41,3 @@ Exemple avec une branche de base avec une version :
 - App: `dev-1-0-4-sameAs`
 
 
-
-
-
