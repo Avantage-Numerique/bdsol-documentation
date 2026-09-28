@@ -40,4 +40,6 @@ Exemple avec une branche de base avec une version :
 - Api : `dev-1-0-4-sameAs`
 - App: `dev-1-0-4-sameAs`
 
+## Structure pour les mises en lignes et travaux en parallèle
 
+![[structure-git-avec-fond2026-09-28-1312.png]]
