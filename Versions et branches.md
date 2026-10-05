@@ -42,4 +42,5 @@ Exemple avec une branche de base avec une version :
 
 ## Structure pour les mises en lignes et travaux en parallèle
 
-![[structure-git-avec-fond2026-09-28-1312.png]]
+![[/excalidraw/structure-git-avec-fond2026-09-28-1312.png]]
+
