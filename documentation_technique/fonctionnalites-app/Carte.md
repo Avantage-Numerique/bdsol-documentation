@@ -84,7 +84,8 @@ Voici les props de la carte :
  Page /contribuer/lieux
 	- [ ] Page PlaceSingleView
 	- [ ] Page PlaceSingleEdit
-	- [ ] Page /consulter? (pas implémenter)
+	- [ ] Page /consulter? (pas implémenté)
+	- [ ] Page / (homepage) pas implémenté)
 ### Page /contribuer/lieux (index.js)(Create lieux)
 Objectifs :
 - Avoir une carte
